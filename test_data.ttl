@@ -1,0 +1,42 @@
+@prefix : <http://localhost:8890/test/> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix prohow: <http://w3id.org/prohow#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:t prohow:requires :r1 .
+:t prohow:requires :r2 .
+:t prohow:requires_one :ro .
+:t prohow:has_step :s1 .
+:t prohow:has_step :s2 .
+:s2 prohow:requires :s1 .
+:t prohow:has_method :m .
+
+:e prohow:has_goal :t .
+:ex_ro prohow:has_environment :e .
+:ex_ro prohow:has_task :ro .
+:ex_ro prohow:has_result prohow:complete .
+
+:ex_t prohow:has_environment :e .
+:ex_t prohow:has_task :t .
+:ex_r1 prohow:has_environment :e .
+:ex_r1 prohow:has_task :r1 .
+:ex_r2 prohow:has_environment :e .
+:ex_r2 prohow:has_task :r2 .
+:ex_s1 prohow:has_environment :e .
+:ex_s1 prohow:has_task :s1 .
+:ex_s2 prohow:has_environment :e .
+:ex_s2 prohow:has_task :s2 .
+:ex_m prohow:has_environment :e .
+:ex_m prohow:has_task :m .
+
+:s1 prohow:has_method :m1 .
+:e1 prohow:sub_environment_of :e .
+:e1 prohow:has_goal :s1 .
+:ex_s1_e1 prohow:has_environment :e1 .
+:ex_s1_e1 prohow:has_task :s1 .
+:ex_s1_m1 prohow:has_environment :e1 .
+:ex_s1_m1 prohow:has_task :m1 .
