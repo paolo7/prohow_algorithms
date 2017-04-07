@@ -25,6 +25,10 @@ def Q7_without_sub_env(env):
 
 def Q7_with_sub_env(env):
     return get_next_tasks_to_accomplish_recursive(env)
+
+def Q8(task):
+    return create_checklists(task)
+
 # Functions that can be directly answered by SPARQL queries
 def get_steps(task):
     return sp.get_steps(task)
