@@ -40,3 +40,11 @@
 :ex_s1_e1 prohow:has_task :s1 .
 :ex_s1_m1 prohow:has_environment :e1 .
 :ex_s1_m1 prohow:has_task :m1 .
+
+:s2 prohow:has_method :m2 .
+:e2 prohow:sub_environment_of :e .
+:e2 prohow:has_goal :s2 .
+:ex_s2_e2 prohow:has_environment :e2 .
+:ex_s2_e2 prohow:has_task :s2 .
+:ex_s2_m2 prohow:has_environment :e2 .
+:ex_s2_m2 prohow:has_task :m2 .
