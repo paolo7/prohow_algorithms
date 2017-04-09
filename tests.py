@@ -1,6 +1,15 @@
 import prohow_functions as pf
 import tests_subroutines as sr
 
+def test_env_active():
+    return pf.is_environment_active("http://localhost:8890/test/e")
+
+def test_env_active_1():
+    return pf.is_environment_active("http://localhost:8890/test/e1")
+
+def test_env_not_active():
+    return not pf.is_environment_active("http://localhost:8890/test/e2")
+
 def test_requirement_sets():
     expected = frozenset(
         [frozenset(["http://localhost:8890/test/ro"]),
