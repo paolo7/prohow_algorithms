@@ -1,5 +1,6 @@
 import time
 import sparql_queries as sp
+
 # Competency questions
 
 def Q1(task):
@@ -30,6 +31,7 @@ def Q8(task):
     return create_checklists(task)
 
 # Functions that can be directly answered by SPARQL queries
+
 def get_steps(task):
     return sp.get_steps(task)
 
@@ -42,18 +44,14 @@ def get_requirements(task):
 def get_sufficient_requirements(task):
     return sp.get_sufficient_requirements(task)
 
+def get_super_environments(env):
+    return sp.get_super_environments(env)
+
 def get_effects(task):
     return sp.get_effects(task)
 
 def get_super_tasks(task):
     return sp.get_super_tasks(task)
-
-def get_task_ex_in_env(task,env):
-    ex = sp.get_task_ex_in_env(task, env)
-    if ex:
-        for e in ex:
-            return e
-    return None
 
 def get_tasks_in_env(env):
     return sp.get_tasks_in_env(env)
@@ -63,6 +61,20 @@ def get_completed_tasks_in_env(env):
 
 def get_sub_environments_in_env(env):
     return sp.get_sub_environments_in_env(env)
+
+def get_task_ex_in_env(task,env):
+    ex = sp.get_task_ex_in_env(task, env)
+    if ex:
+        for e in ex:
+            return e
+    return None
+
+def get_goal(env):
+    goal = sp.get_goal(env)
+    if goal:
+        for t in goal:
+            return t
+    return None
 
 # Functions that can be directly answered by SPARQL queries
 
@@ -90,7 +102,10 @@ def get_decomposition_sets(task):
         D_sets.add(frozenset(D_new))
     return frozenset(D_sets)
 
+# An algorithm to determine whether a task $t$ is ready to be executed in an environment $e$.
 def is_task_ready_in_env(task,env):
+    if not is_environment_active(env):
+        return False
     S = get_super_tasks(task)
     if S:
         B = False
@@ -107,6 +122,18 @@ def is_task_ready_in_env(task,env):
         if R <= C:
             return True
     return False
+
+# An algorithm to determine whether an environment $a$ is active.
+def is_environment_active(env):
+    E_super = get_super_environments(env)
+    if not E_super:
+        return True
+    g = get_goal(env)
+    for super in E_super:
+        if is_task_ready_in_env(g,super):
+            return True
+    return False
+
 
 def get_ready_tasks_in_env(env):
     R = set()
