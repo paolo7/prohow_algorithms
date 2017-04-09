@@ -59,6 +59,30 @@ def get_sufficient_requirements(task):
         result.add(str(row["o"]))
     return frozenset(result)
 
+def get_super_environments(env):
+    result = set()
+    for row in g.query(
+            prefixes+"""
+            SELECT ?o
+            WHERE {
+                <"""+env+"""> prohow:sub_environment_of ?o .
+            }
+            """):
+        result.add(str(row["o"]))
+    return frozenset(result)
+
+def get_goal(env):
+    result = set()
+    for row in g.query(
+            prefixes+"""
+            SELECT ?o
+            WHERE {
+                <"""+env+"""> prohow:has_goal ?o .
+            } LIMIT 1
+            """):
+        result.add(str(row["o"]))
+    return frozenset(result)
+
 def get_effects(task):
     result = set()
     for row in g.query(
