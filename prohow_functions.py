@@ -209,10 +209,18 @@ def expand_checklist_requirements(S,A):
                 T = set(merge_pair_of_AS(T,frozenset(R)))
     # add all the tasks in S in A_new to record that they have been used
     A_new = A_new | S
-    for P in T:
+    T_copy = set(T)
+    for P in T_copy:
         if not frozenset(P) <= frozenset(A_new):
             P_expanded = expand_checklist_requirements(P,A_new)
-            T = T - P
+            # remove the not-expanded set P before adding its expanded version
+            T_to_remove = set()
+            for P1 in T:
+                if frozenset(P1) == frozenset(P):
+                    T_to_remove.add(P1)
+            for T_r in T_to_remove:
+                T.remove(T_r)
+                #T = frozenset(T) - frozenset(P)
             T = T | P_expanded
     return T
 
@@ -246,7 +254,7 @@ def order_task_set(S):
                 O.add(t)
                 O_is_empty = False
         if O_is_empty:
-            raise ValueError('The set of tasks contains a deadlock, it cannot be ordered.')
+            raise ValueError('The set of tasks contains a deadlock, or missing requirements, it cannot be ordered.')
         L.append(frozenset(O))
         S_left = S_left - O
     return tuple(L)
