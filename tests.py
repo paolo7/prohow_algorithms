@@ -1,5 +1,5 @@
 import prohow_functions as pf
-import tests_subroutines as sr
+import test_subroutines as sr
 
 def test_env_active():
     return pf.is_environment_active("http://localhost:8890/test/e")
